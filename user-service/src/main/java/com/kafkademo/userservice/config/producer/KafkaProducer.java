@@ -16,5 +16,28 @@ import java.util.Objects;
 @Slf4j
 public class KafkaProducer {
     private final KafkaTemplate<String,Object> kafkaTemplate;
+
+    public void sendMessage(GenericMessage message){
+        final ListenableFuture<? extends SendResult<String,?>> listenableResult = (ListenableFuture<? extends SendResult<String, ?>>) kafkaTemplate.send(message);
+
+        listenableResult.addCallback(new ListenableFutureCallback<SendResult<String, ?>>() {
+            @Override
+            public void onFailure(Throwable ex) {
+                  log.error("Error while sending message : {}",message,ex);
+            }
+
+            @Override
+            public void onSuccess(SendResult<String, ?> result) {
+                if(Objects.isNull(result)){
+                    log.info("Empty mssage sent successfully",message);
+                    return;
+                }
+                log.info("Message :{} published, topic : {}, partition : {} and offset : {}", message.getPayload(),
+                result.getRecordMetadata().topic(),
+                result.getRecordMetadata().partition(),
+                result.getRecordMetadata().offset());
+            }
+        });
+    }
     
 }
