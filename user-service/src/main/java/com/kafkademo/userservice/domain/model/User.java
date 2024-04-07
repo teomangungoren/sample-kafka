@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 @Data
 @NoArgsConstructor

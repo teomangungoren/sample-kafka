@@ -1,7 +1,7 @@
 package com.kafkademo.transactionservice.config;
 
 import com.kafkademo.transactionservice.domain.UserCreatedEvent;
-import com.kafkademo.transactionservice.domain.UserWallet;
+import com.kafkademo.transactionservice.domain.model.UserWallet;
 import com.kafkademo.transactionservice.service.UserWalletService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

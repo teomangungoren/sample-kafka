@@ -1,4 +1,4 @@
-package com.kafkademo.transactionservice.domain;
+package com.kafkademo.transactionservice.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,4 +20,5 @@ public class UserWallet {
     private Long id;
     private BigDecimal balance;
     private Long userId;
+    private String userEmail;
 }

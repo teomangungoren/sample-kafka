@@ -2,6 +2,7 @@ package com.kafkademo.userservice.service;
 
 import com.kafkademo.userservice.config.producer.KafkaProducer;
 import com.kafkademo.userservice.config.properties.UserCreatedTopicProperties;
+import com.kafkademo.userservice.domain.TransactionCreatedEvent;
 import com.kafkademo.userservice.domain.model.User;
 import com.kafkademo.userservice.domain.request.RegisterRequest;
 import com.kafkademo.userservice.domain.response.UserCreatedPayload;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,5 +33,17 @@ public class UserService {
         headers.put("partitionKey",savedUser.getId());
         kafkaProducer.sendMessage(new GenericMessage<>(userCreatedPayload,headers));
         return savedUser;
+    }
+
+    public void updateBalance(TransactionCreatedEvent event) {
+        User senderUser = userRepository.getUserById(event.getSenderUserId());
+        User receiverUser= userRepository.getUserById(event.getReceiverUserId());
+
+        BigDecimal senderBalance = senderUser.getBalance().subtract(event.getAmount());
+        senderUser.setBalance(senderBalance);
+        BigDecimal receiverBalance = senderUser.getBalance().add(event.getAmount());
+        receiverUser.setBalance(receiverBalance);
+        userRepository.save(senderUser);
+        userRepository.save(receiverUser);
     }
 }
