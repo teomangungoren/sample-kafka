@@ -10,7 +10,6 @@ import java.util.Date;
 @Data
 @Builder
 public class TransactionCreatedPayload{
-    private Long id;
     private Long senderUserId;
     private Long receiverUserId;
     private BigDecimal amount;
@@ -19,7 +18,6 @@ public class TransactionCreatedPayload{
 
     public static TransactionCreatedPayload getTransactionCreatedPayload(Transaction transaction) {
         return TransactionCreatedPayload.builder()
-                .id(transaction.getId())
                 .senderUserId(transaction.getSenderUserId())
                 .receiverUserId(transaction.getReceiverUserId())
                 .amount(transaction.getAmount())

@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: notification_service
+
+
+logging:
+  level:
+    root: INFO
+
+server:
+  port: 0
+
+kafka:
+  host: localhost:9092
+  topics:
+    user-created:
+      topic: user_service.user_created.0
+      consumerGroup: ${spring.application.name}-user-created-consumer
+      replication-factor: 1
+      retention-in-ms: 604800000
+mail:
+  sender:
+    host: ${MAIL_SENDER_HOST:smtp.gmail.com}
+    port: ${MAIL_SENDER_PORT:587}
+    username: ${MAIL_SENDER_USERNAME:apolar1453@gmail.com}
+    password: ${MAIL_SENDER_PASSWORD:ympniyndtwtodmjw}
+    auth: ${MAIL_SENDER_AUTH:true}
+    starttlsEnable: ${MAIL_SENDER_STARTTLS_ENABLE:true}
+
+

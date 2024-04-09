@@ -41,7 +41,8 @@ public class UserService {
 
         BigDecimal senderBalance = senderUser.getBalance().subtract(event.getAmount());
         senderUser.setBalance(senderBalance);
-        BigDecimal receiverBalance = senderUser.getBalance().add(event.getAmount());
+        BigDecimal receiverBalance = receiverUser.getBalance().add(event.getAmount());
+
         receiverUser.setBalance(receiverBalance);
         userRepository.save(senderUser);
         userRepository.save(receiverUser);
